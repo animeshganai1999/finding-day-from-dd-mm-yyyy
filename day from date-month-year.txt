@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <math.h>
+int fun(int M,int D);
+int main() {
+	printf("welcome !!\nhere you can find the day from dd-mm-yyyy\n");
+	printf("enter 0 to exit\n");
+	while(1){
+	abc:
+	printf("");
+	int d,ddd,m,y,leap;
+	int arr[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+	printf("enter dd/mm/year :\n");
+	scanf("%d/",&ddd);
+	if(ddd==0)
+	{
+	exit(0);
+}
+	d = ddd;
+	scanf("%d/%d",&m,&y);
+	leap = leap_year(y);
+	
+
+	if(leap==1){
+		arr[1]=29;
+	}
+
+	if(leap==1 && d>arr[m-1]){
+		printf("you entered a wrond date!!\ntry again\n\n");
+		goto abc;
+	}
+	if(leap==0 && d>arr[m-1] && m!=2){
+
+		printf("you entered a wrond date!!\ntry again\n");
+		goto abc;
+	}
+	if(leap==0 && m==2 && d>28){
+		printf("%d is not a leap year\n",y);
+		printf("you entered a wrond date!!\ntry again\n\n");
+		goto abc;
+	}
+    if(m>12){
+		printf("you entered a wrong month !!\ntry again\n\n");
+		goto abc;
+	}
+
+	int k,M,D,c,p,x,Y,f,temp,day,z[12] = {11,12,1,2,3,4,5,6,7,8,9,10};
+	k=d,x=y;
+	temp=x%10;
+	x=x/10;
+	Y = x%10;
+	D = Y*10+temp;
+	M=z[m-1];
+	D = fun(M,D);
+
+	c=(y-D)/100;
+	f=k+floor((double)(13*M-1)/5) + D+floor((double)D/4)+floor((double)c/4)-2*c;
+	if(f>=0){
+		day = f%7;
+	}else{
+		int kk =(ceil((double)abs(f)/7)*7);
+		day = kk-abs(f);
+	}
+	char dd[7][10] = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
+	printf("the day of the date %02d-%02d-%d is : ",d,m,y);
+	printf("%s\n\n",dd[day]);
+
+}
+
+	return 0;
+}
+int fun(int M,int D){
+	if(M==11 || M==12){
+		return D-1;
+	}else{
+		return D;
+	}
+}
+int leap_year(int y){
+	if(y%4==0 && y%100!=0){
+		return 1; // leap year
+	}else if(y%4==0 && y%400==0){
+		return 1; // leap year
+	}else{
+		return 0; // not leap year
+	}
+}
